@@ -6,7 +6,7 @@ const config = {
     autoIndex: false
   },
   server: {
-    PORT: 9000
+    PORT: process.env.PORT || 9000
   },
   mail:{
     poolConfig : {
