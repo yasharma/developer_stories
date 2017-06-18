@@ -1,7 +1,7 @@
 "use strict";
 const config = {
 	db: {
-		URL: 'mongodb://localhost/adminlte',
+		URL: 'mongodb://localhost/developer_stories',
 		DEBUG: true,
 		autoIndex: true
 	},
