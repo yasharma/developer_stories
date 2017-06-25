@@ -17,7 +17,9 @@ const express 	= require('express'),
 
 mongoose.Promise = global.Promise;
 mongoose.set('debug', config.db.DEBUG);
-mongoose.connect(config.db.URL, {autoReconnect: true});
+mongoose.connect(config.db.URL, config.db.options);
+let conn = mongoose.connection; 
+conn.on('error', console.error.bind(console, 'connection error:'));
 
 /* Node.js compression middleware
 * The middleware will attempt to compress response bodies for all request that traverse through the middleware
@@ -78,9 +80,11 @@ app.use((err, req, res, next) => {
 /*
 * Start the node server using node 'http' package
 */
-http.listen(config.server.PORT, () => {
-    console.log(`Listening on server port:${config.server.PORT}`);
-});
+conn.once('open', function() {
+	http.listen(config.server.PORT, () => {
+	    console.log(`Listening on server port:${config.server.PORT}`);
+	});
+});	
 
 
 // Todos

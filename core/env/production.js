@@ -1,7 +1,11 @@
 "use strict";
 const config = {
   db: {
-    URL: 'mongodb://developer:yash9092@ds123312.mlab.com:23312/developer_stories',
+    URL: 'mongodb://developer:developer9092@ds123312.mlab.com:23312/developer_stories?authSource=admin&replicaSet=rs-ds123312',
+    options: {
+      server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
+      replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } }
+    },
     DEBUG: false,
     autoIndex: false
   },

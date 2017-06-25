@@ -19,6 +19,14 @@ let routes = [
     },
     component: require('@/components/login')
   },
+  {
+    path: '/signup',
+    name: 'signup',
+    meta: {
+      title: 'Signup'
+    },
+    component: require('@/components/signup')
+  },
   { path: '*', redirect: '/' } // If no route matched redirect to home
 ]
 

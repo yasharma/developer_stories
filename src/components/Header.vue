@@ -2,7 +2,7 @@
 	<nav class="nav has-shadow">
 	  	<div class="container">
 			<div class="nav-left">
-			  	<a class="nav-item"> Developer Stream </a>
+			  	<router-link class="nav-item":to="{ name: 'home' }"> Developer Stream </router-link>
 			</div>
 	    	<span class="nav-toggle">
 		     	<span></span>
@@ -17,6 +17,10 @@
 	    		<router-link 
 	    			class="nav-item" 
 	    			:to="{ name: 'login' }"> Login 
+	    		</router-link>
+	    		<router-link 
+	    			class="nav-item" 
+	    			:to="{ name: 'signup' }"> SignUp 
 	    		</router-link>
 	      		<!-- <a class="nav-item is-tab">
 	        		<figure class="image is-16x16" style="margin-right: 8px;">
