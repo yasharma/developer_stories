@@ -49,10 +49,15 @@
 									<p class="control has-icons-left">
 										<input name="confirm_password" type="password" placeholder="Confirm Password" 
 					                      v-model="user.confirm_password"
-					                      v-validate="'required|min:6'" 
+					                      v-validate="'required|confirmed:password'" 
+					                      data-vv-as="confirm password"
 					                      :class="{'input': true, 'is-danger': errors.has('confirm_password') }">
-										<span class="icon is-small is-left"> <i class="material-icons">lock</i> </span>
-										<span v-show="errors.has('confirm_password')" class="help is-danger">{{ errors.first('confirm_password') }}</span>
+										<span class="icon is-small is-left"> 
+											<i class="material-icons">lock</i> 
+										</span>
+										<span v-show="errors.has('confirm_password')" class="help is-danger">
+											{{ errors.first('confirm_password') }}
+										</span>
 									</p>
 								</div>
 								<div class="field">
@@ -88,7 +93,7 @@ export default {
     signUpForm () {
       this.$validator.validateAll().then(() => {
         let auth = new Auth(this.user)
-        auth.login()
+        auth.register()
       }).catch(() => {})
     }
   }
