@@ -21,6 +21,19 @@ mongoose.connect(config.db.URL, config.db.options);
 let conn = mongoose.connection; 
 conn.on('error', console.error.bind(console, 'connection error:'));
 
+/**
+enable cors in development mode
+*/
+if( process.env.NODE_ENV === 'development' ){
+	var cors = require('cors');
+	var corsOptions = {
+	  origin: 'http://localhost:8080',
+	  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+	};
+	app.use(cors());	
+}
+
+
 /* Node.js compression middleware
 * The middleware will attempt to compress response bodies for all request that traverse through the middleware
 * Should be placed before express.static

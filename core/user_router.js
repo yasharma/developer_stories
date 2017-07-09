@@ -15,5 +15,6 @@ fs.readdirSync(path.resolve('./controllers/User')).forEach(file => {
 
 module.exports = {
   	routes: [
+  		{ url: '/register', method: ctrls.userCtrl.register, type: 'post' },
 	]
 };

@@ -11,15 +11,15 @@ UserSchema 	= new Schema({
 	profile_image:{
 		name: {
 			type: String,
-			default: 'no-admin-image.jpg'
+			default: config.image_name
 		},
 		path: {
 			type: String,
-			default: 'images/'
+			default: config.image_path
 		},
 		original_name:  {
 			type: String,
-			default: 'no-admin-image.jpg'
+			default: config.image_name
 		}
 	},
 	firstname: {
@@ -34,10 +34,10 @@ UserSchema 	= new Schema({
 	role: {
 		type: String,
 		enum: {
-			values: ['subadmin', 'admin'],
+			values: ['subadmin', 'admin', 'user'],
 			message: '{VALUE} is not a valid role for user'
 		},
-		required: 'Please provide at least one role'
+		default: 'user'
 	},
 	email: {
 		type: String,
@@ -98,6 +98,7 @@ UserSchema.methods.hashPassword = function(salt, password) {
 UserSchema.methods.comparePassword = function(salt, password) {
     return this.password === this.hashPassword(salt, password);
 };
+
 UserSchema.set('autoIndex', config.db.autoIndex);
 UserSchema.plugin(uniqueValidator, {
     type: 'mongoose-unique-validator'

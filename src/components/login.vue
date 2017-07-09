@@ -12,7 +12,6 @@
 				</div>
 			</div>
 		</section>
-
 		<section class="section">
 			<div class="container">
 				<div class="columns is-mobile">
@@ -47,7 +46,7 @@
 								</div>
 								<div class="field">
 									<p class="control">
-										<button type="submit" class="button is-primary"> Login </button>
+										<button type="submit" :class="{'is-loading': form.submitting}" class="button is-primary"> Login </button>
 									</p>
 								</div>
 								<div class="field">
@@ -71,12 +70,16 @@ export default {
     user: {
       email: '',
       password: ''
+    },
+    form: {
+    	submitting: false
     }
   }),
   methods: {
     loginForm () {
       this.$validator.validateAll().then(() => {
-        let auth = new Auth(this.user)
+        let auth = new Auth(this.user);
+        form.submitting = true;
         auth.login()
       }).catch(() => {})
     }

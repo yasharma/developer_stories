@@ -14,6 +14,7 @@ Vue.use(Buefy, {
 Vue.config.productionTip = false
 
 window.axios.defaults.headers.common = {'X-Requested-With': 'XMLHttpRequest'}
+window.API_URL = (process.env.NODE_ENV !== 'production') ? 'http://localhost:9000/api/' : ''
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
@@ -21,6 +22,7 @@ axios.interceptors.request.use(function (config) {
   return config
 }, function (error) {
   // Do something with request error
+  console.log(error);
   return Promise.reject(error)
 })
 

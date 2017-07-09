@@ -19,7 +19,7 @@ router.use(expressJWT({
 	path:[
 		/^\/admin\/.*/,
 		'/favicon.ico',
-		'/register',
+		'/api/register',
 		'/login',
 		/^\/verifyEmail\/.*/,
 		/^\/reset\/.*/
@@ -30,35 +30,20 @@ router.use(expressJWT({
 * eg. /login
 */
 userRoutes.routes.forEach(x => {
+	router[x.type](x.url, x.method);	
+	// switch(x.type){
 
-	switch(x.type){
-		case 'GET':
-		router.get(x.url, x.method);	
-		break;
+	// 	case 'SPECIALPUT': // Special Type of Routes which hold files
+	// 	router.put(x.url, x.mwear, x.method);
+	// 	break;
 
-		case 'POST':
-		router.post(x.url, x.method);	
-		break;
+	// 	case 'SPECIALPOST': // Special Type of Routes which hold files
+	// 	router.post(x.url, x.mwear, x.method);
+	// 	break;
 
-		case 'PUT':
-		router.put(x.url, x.method);	
-		break;
-
-		case 'DELETE':
-		router.delete(x.url, x.method);	
-		break;
-
-		case 'SPECIALPUT': // Special Type of Routes which hold files
-		router.put(x.url, x.mwear, x.method);
-		break;
-
-		case 'SPECIALPOST': // Special Type of Routes which hold files
-		router.post(x.url, x.mwear, x.method);
-		break;
-
-		default:
-		throw new Error('Invalid method type');
-	}
+	// 	default:
+	// 	throw new Error('Invalid method type');
+	// }
 	
 });
 
