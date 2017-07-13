@@ -17,14 +17,18 @@ register () {
 	return new Promise((resolve, reject) => {
 		Http.post('register', this.data)
 		.then((response) => {
-			console.log(response)
+			resolve(response);
 		})
 		.catch(errors => {
 			let errorObj = {};
 			for(let error in errors){
 				if (errors.hasOwnProperty(error)) {
-					errorObj['data'] = errors[error].email.properties;
-					errorObj['valid'] = false;
+					if( errors[error].email ){
+						errorObj['data'] = {email: errors[error].email.properties.message};	
+					}else{
+						errorObj['data'] = errors[error];	
+					}
+					
 				}
 			}
 			reject(errorObj);

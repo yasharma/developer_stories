@@ -2,7 +2,7 @@ class Http {
   static get() {}
 	static post(url, data) {
 		return new Promise((resolve, reject) => {
-			axios.post(API_URL + url, data)
+			axios.post(url, data)
 			.then(response => {
 				resolve(response.data)
 			})

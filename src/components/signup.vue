@@ -17,12 +17,12 @@
 			<div class="container">
 				<div class="columns is-mobile">
 					<div class="column is-half is-offset-one-quarter">
-						<form @submit.prevent="signUpForm">
+						<form @submit.prevent="signUpForm" @keydown="form.errors.clear($event.target.name)">
 							<div class="box">
-								<div v-show="errors.any()" class="notification is-danger">
+								<div v-show="errors.any() || form.errors.any()" class="notification is-danger">
 									Please correct below errors
 								</div>
-								<div v-show="!errors.any()" class="notification is-primary">
+								<div v-show="!errors.any() && !form.errors.any()" class="notification is-primary">
 									You Must Register Before Continue
 								</div>
 								<div class="field">
@@ -30,9 +30,10 @@
 										<input name="email" type="email" placeholder="Email"
 										v-model="user.email"
 										v-validate="'required|email'" 
-										:class="{'input': true, 'is-danger': errors.has('email') }">
+										:class="{'input': true, 'is-danger': errors.has('email') || form.errors.has('email') }">
 										<span class="icon is-small is-left"> <i class="material-icons">email</i> </span>
 										<span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+										<span v-show="form.errors.has('email')" class="help is-danger">{{ form.errors.get('email') }}</span>
 									</p>
 								</div>
 								<div class="field">
@@ -81,6 +82,7 @@
 
 <script>
 	import Auth from '@/lib/Auth'
+	import Errors from '@/lib/Error'
 	export default {
 		data: () => ({
 			user: {
@@ -89,7 +91,8 @@
 				confirm_password: ''
 			},
 			form: {
-				submitting: false
+				submitting: false,
+				errors: new Errors()
 			}
 		}),
 		methods: {
@@ -98,8 +101,19 @@
 					if(result){
 						let auth = new Auth(this.user)
 						this.form.submitting = true;
-						auth.register().then(response => console.log(response))
-						.catch(errors => console.log(errors))
+						auth.register()
+						.then(response => {
+							this.$dialog.confirm({
+				                title: 'Message!',
+				                message: 'You are successfully registered with us!<br> kindly check you inbox or spam to verify your account.',
+				                confirmText: 'Thanks',
+				                onConfirm: () => {
+						            this.$router.push('login');
+						        }
+				            });
+						})
+						.catch(({data}) => this.form.errors.record(data))
+						.then(() => {this.form.submitting = false;})
 					}
 				})
 			}
